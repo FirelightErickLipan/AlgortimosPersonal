@@ -9,6 +9,7 @@ import '../dialogs/algorithm_selection_dialog.dart';
 import '../screens/assignment_algo_screen.dart';
 import '../screens/contact_screen.dart';
 import '../screens/johnson_algo_screen.dart';
+import '../screens/matlab_fuzzy_screen.dart';
 import '../screens/northwest_algo_screen.dart';
 import '../screens/sorting_algo_screen.dart';
 import '../../domain/services/sorting_registry.dart';
@@ -24,6 +25,7 @@ enum ExplanationWebPage {
   dijkstra,
   kruskal,
   bst,
+  matlab,
   selectionSort,
   insertionSort,
   shellSort,
@@ -65,6 +67,9 @@ class WebExplanationShell extends ConsumerWidget {
         break;
       case ExplanationWebPage.bst:
         targetScreen = const BstTheoryScreen();
+        break;
+      case ExplanationWebPage.matlab:
+        targetScreen = const MatlabFuzzyScreen();
         break;
       case ExplanationWebPage.selectionSort:
         targetScreen = const SortingAlgoScreen(
@@ -567,6 +572,29 @@ class WebExplanationShell extends ConsumerWidget {
             label: 'Árboles BST',
             page: ExplanationWebPage.bst,
             icon: Icons.account_tree_outlined,
+            isDrawer: isDrawer,
+          ),
+        ),
+        const SizedBox(height: 16),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+          child: Text(
+            'Herramientas',
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.0,
+              color: colorScheme.primary,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 12),
+          child: _buildVerticalNavLink(
+            context,
+            label: 'MATLAB (Lógica Difusa)',
+            page: ExplanationWebPage.matlab,
+            icon: Icons.science_rounded,
             isDrawer: isDrawer,
           ),
         ),
