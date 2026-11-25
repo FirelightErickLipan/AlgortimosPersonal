@@ -134,6 +134,8 @@ Las pruebas cubren:
 - Algoritmos matemáticos (Hungarian solver, Johnson topological pass).
 - Pruebas de widgets (renderizado del canvas, paneles de edición y matrices modulares).
 
+
+
 ---
 
 ## Cómo Contribuir
