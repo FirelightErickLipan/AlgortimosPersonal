@@ -5,40 +5,45 @@ import '../widgets/web_explanation_navbar.dart';
 
 class TeamMemberData {
   final String name;
+  final String role;
   final String email;
   final String imagePath;
 
   const TeamMemberData({
     required this.name,
+    required this.role,
     required this.email,
     required this.imagePath,
   });
 }
 
+/// Pestaña "Equipo": el proyecto es personal, así que solo aparece el autor.
 class ContactScreen extends StatelessWidget {
   const ContactScreen({super.key});
 
   static const List<TeamMemberData> teamMembers = [
     TeamMemberData(
       name: 'Neil Erick Lipan Valdez',
+      role: 'Autor y desarrollador del proyecto',
       email: 'neil.lipan.valdez@gmail.com',
       imagePath: 'assets/images/Neil.webp',
     ),
-    TeamMemberData(
-      name: 'Eduardo Hugo Apaza Condori',
-      email: 'eduardo.apaza@ucb.edu.bo',
-      imagePath: 'assets/images/Eduardo.webp',
-    ),
   ];
+
+  Future<void> _writeEmail(String email) async {
+    final uri = Uri(scheme: 'mailto', path: email);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
     final width = MediaQuery.of(context).size.width;
 
     return WebExplanationShell(
-      activePage: ExplanationWebPage.contact,
+      activePage: ExplanationWebPage.equipo,
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         padding: EdgeInsets.symmetric(
@@ -55,11 +60,8 @@ class ContactScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Header Banner
                 _buildHeaderBanner(context, width),
                 SizedBox(height: width > 600 ? 40 : 28),
-
-                // Team Section Title
                 Row(
                   children: [
                     Container(
@@ -76,7 +78,7 @@ class ContactScreen extends StatelessWidget {
                     ),
                     const SizedBox(width: 12),
                     Text(
-                      'Equipo SleepCode();',
+                      'Autor del proyecto',
                       style: TextStyle(
                         fontSize: width > 600 ? 22 : 18,
                         fontWeight: FontWeight.bold,
@@ -86,54 +88,22 @@ class ContactScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 24),
-
-                // Team Members Responsive Grid
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    final maxWidth = constraints.maxWidth;
-                    if (maxWidth > 580) {
-                      // Desktop/Tablet View: 2 Columns
-                      return Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: teamMembers
-                            .map(
-                              (member) => Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10.0,
-                                  ),
-                                  child: _buildTeamMemberCard(
-                                    context,
-                                    member,
-                                    isCompact: false,
-                                  ),
-                                ),
-                              ),
-                            )
-                            .toList(),
-                      );
-                    } else {
-                      // Mobile View: Single Column Stacked
-                      return Column(
-                        children: teamMembers
-                            .map(
-                              (member) => Padding(
-                                padding: const EdgeInsets.only(bottom: 20.0),
-                                child: _buildTeamMemberCard(
-                                  context,
-                                  member,
-                                  isCompact: true,
-                                ),
-                              ),
-                            )
-                            .toList(),
-                      );
-                    }
-                  },
+                Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 380),
+                    child: Column(
+                      children: [
+                        for (final member in teamMembers)
+                          _buildTeamMemberCard(
+                            context,
+                            member,
+                            isCompact: width <= 600,
+                          ),
+                      ],
+                    ),
+                  ),
                 ),
-                SizedBox(height: width > 600 ? 48 : 32),
-
-                // General Contact Section
+                SizedBox(height: width > 600 ? 40 : 28),
                 _buildContactInfoSection(context, width),
               ],
             ),
@@ -148,14 +118,14 @@ class ContactScreen extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(width > 600 ? 36 : 20),
+      padding: EdgeInsets.all(width > 600 ? 32 : 20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            colorScheme.primaryContainer,
-            colorScheme.surfaceContainerHigh,
+            colorScheme.primaryContainer.withValues(alpha: 0.55),
+            colorScheme.surfaceContainerLow,
           ],
         ),
         borderRadius: BorderRadius.circular(24),
@@ -180,13 +150,13 @@ class ContactScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
-                  Icons.groups_rounded,
+                  Icons.person_rounded,
                   size: 16,
                   color: colorScheme.primary,
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  'EQUIPO: SleepCode();',
+                  'AUTOR',
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.bold,
@@ -199,7 +169,7 @@ class ContactScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Desarrolladores de SleepCode();',
+            'Proyecto personal de Análisis de Algoritmos',
             style: TextStyle(
               fontSize: width > 600 ? 30 : 22,
               fontWeight: FontWeight.bold,
@@ -209,7 +179,8 @@ class ContactScreen extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            'Conoce a los integrantes del equipo SleepCode(); y explora el código fuente del proyecto.',
+            'Este proyecto fue desarrollado de forma individual como entrega final del curso de Análisis de Algoritmos: '
+            'asignar pedidos de delivery a repartidores con el Método Húngaro.',
             style: TextStyle(
               fontSize: width > 600 ? 15 : 13.5,
               height: 1.5,
@@ -247,7 +218,6 @@ class ContactScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Square Image Hero Container (1:1 Aspect Ratio)
           AspectRatio(
             aspectRatio: 1.0,
             child: Image.asset(
@@ -265,8 +235,6 @@ class ContactScreen extends StatelessWidget {
               ),
             ),
           ),
-
-          // Name & Email Section
           Padding(
             padding: EdgeInsets.all(isCompact ? 16 : 20),
             child: Column(
@@ -281,14 +249,18 @@ class ContactScreen extends StatelessWidget {
                     letterSpacing: -0.3,
                   ),
                 ),
+                const SizedBox(height: 4),
+                Text(
+                  member.role,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                ),
                 const SizedBox(height: 8),
                 InkWell(
-                  onTap: () async {
-                    final uri = Uri(scheme: 'mailto', path: member.email);
-                    if (await canLaunchUrl(uri)) {
-                      await launchUrl(uri);
-                    }
-                  },
+                  onTap: () => _writeEmail(member.email),
                   borderRadius: BorderRadius.circular(8),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -352,7 +324,7 @@ class ContactScreen extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Text(
-                'Contacto General & Repositorio',
+                'Contacto',
                 style: TextStyle(
                   fontSize: width > 600 ? 20 : 17,
                   fontWeight: FontWeight.bold,
@@ -363,7 +335,7 @@ class ContactScreen extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'Si deseas conocer más detalles del código fuente, arquitectura o contribuir al proyecto, puedes explorar el repositorio oficial.',
+            'Si tienes preguntas sobre el proyecto, el algoritmo o la aplicación interactiva, puedes escribirme por correo.',
             style: TextStyle(
               fontSize: width > 600 ? 14 : 13,
               height: 1.5,
@@ -372,20 +344,15 @@ class ContactScreen extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           OutlinedButton.icon(
-            onPressed: () async {
-              final uri = Uri.parse('https://github.com/marinobc/algorithm');
-              if (await canLaunchUrl(uri)) {
-                await launchUrl(uri, mode: LaunchMode.externalApplication);
-              }
-            },
+            onPressed: () => _writeEmail(teamMembers.first.email),
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            icon: const Icon(Icons.code_rounded, size: 18),
-            label: const Text('Ver Repositorio del Proyecto'),
+            icon: const Icon(Icons.email_outlined, size: 18),
+            label: const Text('Escribir a Neil'),
           ),
         ],
       ),

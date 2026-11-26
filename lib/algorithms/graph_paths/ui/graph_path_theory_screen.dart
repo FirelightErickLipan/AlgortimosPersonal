@@ -121,8 +121,8 @@ class GraphPathTheoryScreen extends ConsumerWidget {
 
     return WebExplanationShell(
       activePage: kruskal
-          ? ExplanationWebPage.kruskal
-          : ExplanationWebPage.dijkstra,
+          ? ExplanationWebPage.introduccion
+          : ExplanationWebPage.introduccion,
       child: SingleChildScrollView(
         child: Column(
           children: [

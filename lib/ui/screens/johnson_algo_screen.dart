@@ -15,7 +15,7 @@ class JohnsonAlgoScreen extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return WebExplanationShell(
-      activePage: ExplanationWebPage.johnson,
+      activePage: ExplanationWebPage.introduccion,
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(

@@ -23,10 +23,6 @@ class AlgorithmRegistry {
 
   static final List<GraphAlgorithm> registeredAlgorithms = [
     const AssignmentAlgorithm(),
-    const JohnsonAlgorithm(),
-    const NorthwestAlgorithm(),
-    const GraphPathAlgorithm.dijkstra(),
-    const GraphPathAlgorithm.kruskal(),
   ];
 
   static GraphAlgorithm? findById(String? id) {

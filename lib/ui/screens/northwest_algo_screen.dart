@@ -16,7 +16,7 @@ class NorthwestAlgoScreen extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
 
     return WebExplanationShell(
-      activePage: ExplanationWebPage.northwest,
+      activePage: ExplanationWebPage.introduccion,
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(

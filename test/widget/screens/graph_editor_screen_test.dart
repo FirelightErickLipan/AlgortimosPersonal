@@ -15,7 +15,7 @@ void main() {
       (tester) async {
         final container = ProviderContainer();
 
-        // Pre-fill graph with a node and select Johnson algorithm
+        // Pre-fill graph with a node and select Assignment algorithm
         container
             .read(grafoProvider.notifier)
             .cargarGrafo(
@@ -23,10 +23,10 @@ void main() {
                 nodos: {'n1': Nodo(id: 'n1', colorValue: 0, x: 10, y: 10)},
               ),
             );
-        container.read(activeAlgorithmProvider.notifier).selectById('johnson');
+        container.read(activeAlgorithmProvider.notifier).selectById(AlgorithmRegistry.assignmentId);
 
         expect(container.read(grafoProvider).nodos.length, equals(1));
-        expect(container.read(activeAlgorithmProvider)?.id, equals('johnson'));
+        expect(container.read(activeAlgorithmProvider)?.id, equals(AlgorithmRegistry.assignmentId));
 
         await tester.pumpWidget(
           UncontrolledProviderScope(
@@ -51,9 +51,9 @@ void main() {
         await tester.tap(vaciarItem);
         await tester.pump();
 
-        // Graph should be empty and active algorithm mode preserved (Johnson)
+        // Graph should be empty and active algorithm mode preserved (Asignación)
         expect(container.read(grafoProvider).nodos.isEmpty, isTrue);
-        expect(container.read(activeAlgorithmProvider)?.id, equals('johnson'));
+        expect(container.read(activeAlgorithmProvider)?.id, equals(AlgorithmRegistry.assignmentId));
 
         // Clean up widget tree before disposing container
         await tester.pump(const Duration(seconds: 4));
@@ -67,7 +67,7 @@ void main() {
     ) async {
       final container = ProviderContainer();
 
-      // Pre-fill graph with a node and select Johnson algorithm
+      // Pre-fill graph with a node and select Assignment algorithm
       container
           .read(grafoProvider.notifier)
           .cargarGrafo(
@@ -75,7 +75,7 @@ void main() {
               nodos: {'n1': Nodo(id: 'n1', colorValue: 0, x: 10, y: 10)},
             ),
           );
-      container.read(activeAlgorithmProvider.notifier).selectById('johnson');
+      container.read(activeAlgorithmProvider.notifier).selectById(AlgorithmRegistry.assignmentId);
 
       await tester.pumpWidget(
         UncontrolledProviderScope(

@@ -18,10 +18,10 @@ class SortingAlgoScreen extends StatelessWidget {
   bool get _insertion => algorithm.id == 'insertion';
 
   ExplanationWebPage get _page => switch (algorithm.id) {
-    'selection' => ExplanationWebPage.selectionSort,
-    'insertion' => ExplanationWebPage.insertionSort,
-    'shell' => ExplanationWebPage.shellSort,
-    _ => ExplanationWebPage.mergeSort,
+    'selection' => ExplanationWebPage.introduccion,
+    'insertion' => ExplanationWebPage.introduccion,
+    'shell' => ExplanationWebPage.introduccion,
+    _ => ExplanationWebPage.introduccion,
   };
 
   SortingPageContent get _c => SortingPageContent.forId(algorithm.id);

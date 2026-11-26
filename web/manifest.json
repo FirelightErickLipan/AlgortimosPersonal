@@ -1,6 +1,6 @@
 {
-    "name": "SleepNode",
-    "short_name": "SleepNode",
+    "name": "Proyecto — Delivery con el Método Húngaro",
+    "short_name": "Húngaro",
     "start_url": "index.html",
     "scope": ".",
     "display": "standalone",
@@ -11,7 +11,7 @@
     ],
     "background_color": "#141218",
     "theme_color": "#FFFFFF",
-    "description": "Aplicación interactiva para edición, modelado y resolución de algoritmos de grafos.",
+    "description": "Asignación óptima de repartidores a pedidos con el Método Húngaro: teoría, problema y aplicación interactiva.",
     "orientation": "any",
     "prefer_related_applications": false,
     "icons": [

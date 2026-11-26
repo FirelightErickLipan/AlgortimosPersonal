@@ -2,12 +2,23 @@ import 'package:flutter/material.dart';
 
 class WelcomeHeroSection extends StatelessWidget {
   final VoidCallback onOpenEditor;
-  final VoidCallback onScrollToExamples;
+  final VoidCallback? onScrollToExamples;
+  final String badge;
+  final String title;
+  final String subtitle;
+  final String primaryLabel;
+  final String secondaryLabel;
 
   const WelcomeHeroSection({
     super.key,
     required this.onOpenEditor,
-    required this.onScrollToExamples,
+    this.onScrollToExamples,
+    this.badge = 'Aprende Conceptos Fundamentales',
+    this.title = '¿Qué son los Algoritmos y para qué sirven?',
+    this.subtitle =
+        'Descubre la lógica que impulsa la tecnología moderna, optimiza procesos diarios y resuelve los problemas computacionales más complejos.',
+    this.primaryLabel = 'Abrir Editor de Grafos',
+    this.secondaryLabel = 'Ver 3 Ejemplos Prácticos',
   });
 
   @override
@@ -68,7 +79,7 @@ class WelcomeHeroSection extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'Aprende Conceptos Fundamentales',
+                          badge,
                           style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
@@ -82,7 +93,7 @@ class WelcomeHeroSection extends StatelessWidget {
 
                   // Main Web Headline
                   Text(
-                    '¿Qué son los Algoritmos y para qué sirven?',
+                    title,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: width > 700 ? 42 : 30,
@@ -98,7 +109,7 @@ class WelcomeHeroSection extends StatelessWidget {
                   ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 750),
                     child: Text(
-                      'Descubre la lógica que impulsa la tecnología moderna, optimiza procesos diarios y resuelve los problemas computacionales más complejos.',
+                      subtitle,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: width > 700 ? 18 : 15,
@@ -130,15 +141,16 @@ class WelcomeHeroSection extends StatelessWidget {
                           ),
                         ),
                         icon: const Icon(Icons.rocket_launch_rounded, size: 20),
-                        label: const Text(
-                          'Abrir Editor de Grafos',
-                          style: TextStyle(
+                        label: Text(
+                          primaryLabel,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                      OutlinedButton.icon(
+                      if (onScrollToExamples != null)
+                        OutlinedButton.icon(
                         onPressed: onScrollToExamples,
                         style: OutlinedButton.styleFrom(
                           foregroundColor: colorScheme.primary,
@@ -158,9 +170,9 @@ class WelcomeHeroSection extends StatelessWidget {
                           Icons.arrow_downward_rounded,
                           size: 20,
                         ),
-                        label: const Text(
-                          'Ver 3 Ejemplos Prácticos',
-                          style: TextStyle(
+                        label: Text(
+                          secondaryLabel,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),

@@ -575,9 +575,7 @@ class _GraphEditorScreenState extends ConsumerState<GraphEditorScreen> {
                 onSaveJpg: _saveGraphAsJpg,
                 onOpenTutorial: _openTutorialScreen,
                 onOpenConfig: _openConfigModal,
-                showAlgorithmSelector:
-                    activeAlgo?.id != AlgorithmRegistry.dijkstraId &&
-                    activeAlgo?.id != AlgorithmRegistry.kruskalId,
+                showAlgorithmSelector: false,
               ),
               body: Stack(
                 children: [

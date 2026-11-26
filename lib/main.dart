@@ -44,7 +44,7 @@ class MainApp extends ConsumerWidget {
     ThemeColorSync.updateThemeColor(isDark);
 
     return MaterialApp(
-      title: 'SleepNode',
+      title: 'Proyecto — Delivery con el Método Húngaro',
       scrollBehavior: AppScrollBehavior(),
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,

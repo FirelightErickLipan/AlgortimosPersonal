@@ -1,36 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../ui/screens/graph_editor_screen.dart';
-import '../../core/algorithm_registry.dart';
+import '../../../ui/screens/application_screen.dart';
 
-/// Dedicated launch button for the Assignment Algorithm to be embedded
-/// in the explanation webpage or tutorials.
-class AssignmentLaunchButton extends ConsumerWidget {
+/// Botón que lleva a la pestaña Aplicación (grafo de delivery ya resuelto).
+class AssignmentLaunchButton extends StatelessWidget {
   final String label;
   final IconData icon;
 
   const AssignmentLaunchButton({
     super.key,
-    this.label = 'Dibujar Grafo de Asignación',
+    this.label = 'Ver la aplicación con la solución',
     this.icon = Icons.assignment_turned_in_rounded,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     const accentColor = Color(0xFF7C4DFF);
     final isMobile = MediaQuery.of(context).size.width < 600;
 
     return ElevatedButton.icon(
       onPressed: () {
-        // Select Assignment Algorithm in Riverpod
-        ref
-            .read(activeAlgorithmProvider.notifier)
-            .selectById(AlgorithmRegistry.assignmentId);
-
-        // Navigate to the canvas editor
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const GraphEditorScreen()),
+          MaterialPageRoute(builder: (_) => const ApplicationScreen()),
         );
       },
       style: ElevatedButton.styleFrom(

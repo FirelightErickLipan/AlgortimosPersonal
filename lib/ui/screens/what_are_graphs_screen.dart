@@ -29,7 +29,7 @@ class WhatAreGraphsScreen extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return WebExplanationShell(
-      activePage: ExplanationWebPage.graphs,
+      activePage: ExplanationWebPage.introduccion,
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(

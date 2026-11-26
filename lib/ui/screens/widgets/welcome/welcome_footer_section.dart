@@ -2,8 +2,18 @@ import 'package:flutter/material.dart';
 
 class WelcomeFooterSection extends StatelessWidget {
   final VoidCallback onOpenEditor;
+  final String title;
+  final String actionLabel;
+  final String copyright;
 
-  const WelcomeFooterSection({super.key, required this.onOpenEditor});
+  const WelcomeFooterSection({
+    super.key,
+    required this.onOpenEditor,
+    this.title = 'Editor de Nodos y Algoritmos de Grafos',
+    this.actionLabel = 'Editor de Grafos',
+    this.copyright =
+        '© Guía Educativa de Algoritmos. Diseñado como plataforma de aprendizaje interactivo.',
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +56,7 @@ class WelcomeFooterSection extends StatelessWidget {
                           const SizedBox(width: 8),
                           Flexible(
                             child: Text(
-                              'Editor de Nodos y Algoritmos de Grafos',
+                              title,
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -60,7 +70,7 @@ class WelcomeFooterSection extends StatelessWidget {
                       TextButton.icon(
                         onPressed: onOpenEditor,
                         icon: const Icon(Icons.launch_rounded, size: 16),
-                        label: const Text('Editor de Grafos'),
+                        label: Text(actionLabel),
                       ),
                     ],
                   );
@@ -70,7 +80,7 @@ class WelcomeFooterSection extends StatelessWidget {
               const Divider(height: 1),
               const SizedBox(height: 16),
               Text(
-                '© Guía Educativa de Algoritmos. Diseñado como plataforma de aprendizaje interactivo.',
+                copyright,
                 style: TextStyle(
                   fontSize: 12,
                   color: colorScheme.onSurfaceVariant,

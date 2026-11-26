@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nodos/ui/screens/welcome_explanation_screen.dart';
 import 'package:nodos/ui/screens/widgets/welcome/welcome_basics_section.dart';
@@ -102,14 +103,20 @@ void main() {
     testWidgets('WelcomeExplanationScreen renders full screen cleanly',
         (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: WelcomeExplanationScreen(),
+        const ProviderScope(
+          child: MaterialApp(
+            home: WelcomeExplanationScreen(),
+          ),
         ),
       );
 
       expect(find.byType(WelcomeExplanationScreen), findsOneWidget);
       expect(find.byType(WelcomeHeroSection), findsOneWidget);
-      expect(find.byType(WelcomeBasicsSection), findsOneWidget);
+      expect(find.byType(WelcomeFooterSection), findsOneWidget);
+      expect(
+        find.text('Entregas más rápidas: ¿qué repartidor lleva cada pedido?'),
+        findsWidgets,
+      );
     });
   });
 }

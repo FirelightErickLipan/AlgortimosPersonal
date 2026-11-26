@@ -309,7 +309,7 @@ void main() {
       const ProviderScope(
         child: MaterialApp(
           home: WebExplanationShell(
-            activePage: ExplanationWebPage.selectionSort,
+            activePage: ExplanationWebPage.introduccion,
           ),
         ),
       ),

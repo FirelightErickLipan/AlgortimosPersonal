@@ -106,7 +106,7 @@ class _MatlabLabScreenState extends ConsumerState<MatlabLabScreen> {
     });
 
     return WebExplanationShell(
-      activePage: ExplanationWebPage.matlab,
+      activePage: ExplanationWebPage.introduccion,
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Center(
@@ -320,7 +320,7 @@ class _OpenedCard extends StatelessWidget {
     final inputs = RegExp(r'NumInputs=(\d+)').firstMatch(content)?.group(1);
     final outputs = RegExp(r'NumOutputs=(\d+)').firstMatch(content)?.group(1);
     final details = [
-      if (systemName != null) systemName,
+      ?systemName,
       if (inputs != null) '$inputs entradas',
       if (outputs != null) '$outputs salida(s)',
       if (rules != null) '$rules reglas',

@@ -28,7 +28,7 @@ class MatlabFuzzyScreen extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return WebExplanationShell(
-      activePage: ExplanationWebPage.matlab,
+      activePage: ExplanationWebPage.introduccion,
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(

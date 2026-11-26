@@ -19,7 +19,7 @@ class BstTheoryScreen extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
 
     return WebExplanationShell(
-      activePage: ExplanationWebPage.bst,
+      activePage: ExplanationWebPage.introduccion,
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(

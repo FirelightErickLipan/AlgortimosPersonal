@@ -1,36 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../algorithms/core/algorithm_registry.dart';
-import '../../algorithms/bst/ui/bst_theory_screen.dart';
-import '../../algorithms/graph_paths/ui/graph_path_theory_screen.dart';
-import '../dialogs/algorithm_selection_dialog.dart';
+import '../screens/application_screen.dart';
 import '../screens/assignment_algo_screen.dart';
+import '../screens/conclusions_screen.dart';
 import '../screens/contact_screen.dart';
-import '../screens/johnson_algo_screen.dart';
-import '../screens/matlab_fuzzy_screen.dart';
-import '../screens/northwest_algo_screen.dart';
-import '../screens/sorting_algo_screen.dart';
-import '../../domain/services/sorting_registry.dart';
+import '../screens/objective_screen.dart';
+import '../screens/problem_screen.dart';
 import '../screens/welcome_explanation_screen.dart';
-import '../screens/what_are_graphs_screen.dart';
 
 enum ExplanationWebPage {
-  algorithms,
-  graphs,
-  assignment,
-  johnson,
-  northwest,
-  dijkstra,
-  kruskal,
-  bst,
-  matlab,
-  selectionSort,
-  insertionSort,
-  shellSort,
-  mergeSort,
-  contact,
+  introduccion,
+  problema,
+  objetivo,
+  marcoTeorico,
+  aplicacion,
+  conclusiones,
+  equipo,
 }
 
 class WebExplanationShell extends ConsumerWidget {
@@ -44,54 +30,25 @@ class WebExplanationShell extends ConsumerWidget {
 
     Widget targetScreen;
     switch (page) {
-      case ExplanationWebPage.algorithms:
+      case ExplanationWebPage.introduccion:
         targetScreen = const WelcomeExplanationScreen();
         break;
-      case ExplanationWebPage.graphs:
-        targetScreen = const WhatAreGraphsScreen();
+      case ExplanationWebPage.problema:
+        targetScreen = const ProblemScreen();
         break;
-      case ExplanationWebPage.assignment:
+      case ExplanationWebPage.objetivo:
+        targetScreen = const ObjectiveScreen();
+        break;
+      case ExplanationWebPage.marcoTeorico:
         targetScreen = const AssignmentAlgoScreen();
         break;
-      case ExplanationWebPage.johnson:
-        targetScreen = const JohnsonAlgoScreen();
+      case ExplanationWebPage.aplicacion:
+        targetScreen = const ApplicationScreen();
         break;
-      case ExplanationWebPage.northwest:
-        targetScreen = const NorthwestAlgoScreen();
+      case ExplanationWebPage.conclusiones:
+        targetScreen = const ConclusionsScreen();
         break;
-      case ExplanationWebPage.dijkstra:
-        targetScreen = const GraphPathTheoryScreen.dijkstra();
-        break;
-      case ExplanationWebPage.kruskal:
-        targetScreen = const GraphPathTheoryScreen.kruskal();
-        break;
-      case ExplanationWebPage.bst:
-        targetScreen = const BstTheoryScreen();
-        break;
-      case ExplanationWebPage.matlab:
-        targetScreen = const MatlabFuzzyScreen();
-        break;
-      case ExplanationWebPage.selectionSort:
-        targetScreen = const SortingAlgoScreen(
-          algorithm: SortingRegistry.selection,
-        );
-        break;
-      case ExplanationWebPage.insertionSort:
-        targetScreen = const SortingAlgoScreen(
-          algorithm: SortingRegistry.insertion,
-        );
-        break;
-      case ExplanationWebPage.shellSort:
-        targetScreen = const SortingAlgoScreen(
-          algorithm: SortingRegistry.shell,
-        );
-        break;
-      case ExplanationWebPage.mergeSort:
-        targetScreen = const SortingAlgoScreen(
-          algorithm: SortingRegistry.merge,
-        );
-        break;
-      case ExplanationWebPage.contact:
+      case ExplanationWebPage.equipo:
         targetScreen = const ContactScreen();
         break;
     }
@@ -103,28 +60,6 @@ class WebExplanationShell extends ConsumerWidget {
             FadeTransition(opacity: animation, child: child),
         transitionDuration: const Duration(milliseconds: 250),
       ),
-    );
-  }
-
-  void _goToApp(BuildContext context, WidgetRef ref) {
-    if (activePage == ExplanationWebPage.assignment) {
-      ref
-          .read(activeAlgorithmProvider.notifier)
-          .selectById(AlgorithmRegistry.assignmentId);
-    } else if (activePage == ExplanationWebPage.johnson) {
-      ref
-          .read(activeAlgorithmProvider.notifier)
-          .selectById(AlgorithmRegistry.johnsonId);
-    } else if (activePage == ExplanationWebPage.northwest) {
-      ref
-          .read(activeAlgorithmProvider.notifier)
-          .selectById(AlgorithmRegistry.northwestId);
-    } else {
-      ref.read(activeAlgorithmProvider.notifier).clear();
-    }
-
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (ctx) => const AlgorithmSelectionScreen()),
     );
   }
 
@@ -273,15 +208,15 @@ class WebExplanationShell extends ConsumerWidget {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(3),
-                        child: SvgPicture.asset(
-                          'assets/icons/logo.svg',
-                          fit: BoxFit.contain,
+                        child: Icon(
+                          Icons.hub_rounded,
+                          color: colorScheme.primary,
                         ),
                       ),
                     ),
                     const SizedBox(width: 10),
                     const Text(
-                      'SleepNode',
+                      'Proyecto',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -322,7 +257,7 @@ class WebExplanationShell extends ConsumerWidget {
               child: InkWell(
                 onTap: () {
                   if (isDrawer) Navigator.of(context).pop();
-                  _navigateTo(context, ExplanationWebPage.algorithms);
+                  _navigateTo(context, ExplanationWebPage.introduccion);
                 },
                 borderRadius: BorderRadius.circular(12),
                 child: Padding(
@@ -345,16 +280,16 @@ class WebExplanationShell extends ConsumerWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(4),
-                          child: SvgPicture.asset(
-                            'assets/icons/logo.svg',
-                            fit: BoxFit.contain,
-                          ),
+                          child: Icon(
+                          Icons.hub_rounded,
+                          color: colorScheme.primary,
+                        ),
                         ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          'SleepNode',
+                          'Proyecto',
                           style: const TextStyle(
                             fontSize: 15.5,
                             fontWeight: FontWeight.bold,
@@ -381,31 +316,7 @@ class WebExplanationShell extends ConsumerWidget {
         ),
         const SizedBox(height: 18),
 
-        // FIRST ACTION OPTION: "Editar Grafos"
-        SizedBox(
-          width: double.infinity,
-          child: FilledButton.icon(
-            onPressed: () {
-              if (isDrawer) Navigator.of(context).pop();
-              _goToApp(context, ref);
-            },
-            style: FilledButton.styleFrom(
-              backgroundColor: colorScheme.primary,
-              foregroundColor: colorScheme.onPrimary,
-              padding: const EdgeInsets.symmetric(vertical: 14),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              elevation: 2,
-            ),
-            icon: const Icon(Icons.edit_note_rounded, size: 20),
-            label: const Text(
-              'Editar Grafos',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-            ),
-          ),
-        ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 4),
         const Divider(height: 1),
         const SizedBox(height: 16),
 
@@ -427,184 +338,58 @@ class WebExplanationShell extends ConsumerWidget {
         // Vertical Navigation Menu Items
         _buildVerticalNavLink(
           context,
-          label: '1. Inicio',
-          page: ExplanationWebPage.algorithms,
+          label: '1. Introducción',
+          page: ExplanationWebPage.introduccion,
           icon: Icons.home_outlined,
           isDrawer: isDrawer,
         ),
         const SizedBox(height: 6),
         _buildVerticalNavLink(
           context,
-          label: '2. Grafos',
-          page: ExplanationWebPage.graphs,
-          icon: Icons.hub_outlined,
+          label: '2. Problema',
+          page: ExplanationWebPage.problema,
+          icon: Icons.help_outline_rounded,
           isDrawer: isDrawer,
         ),
-        const SizedBox(height: 14),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 4.0),
-          child: Text(
-            'Algoritmos',
-            style: TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.0,
-              color: colorScheme.primary,
-            ),
-          ),
+        const SizedBox(height: 6),
+        _buildVerticalNavLink(
+          context,
+          label: '3. Objetivo',
+          page: ExplanationWebPage.objetivo,
+          icon: Icons.flag_outlined,
+          isDrawer: isDrawer,
         ),
-        const SizedBox(height: 4),
-        Padding(
-          padding: const EdgeInsets.only(left: 12.0),
-          child: Column(
-            children: [
-              _buildVerticalNavLink(
-                context,
-                label: 'Asignación',
-                page: ExplanationWebPage.assignment,
-                icon: Icons.assignment_turned_in_outlined,
-                isDrawer: isDrawer,
-              ),
-              const SizedBox(height: 6),
-              _buildVerticalNavLink(
-                context,
-                label: 'Johnson',
-                page: ExplanationWebPage.johnson,
-                icon: Icons.alt_route_rounded,
-                isDrawer: isDrawer,
-              ),
-              const SizedBox(height: 6),
-              _buildVerticalNavLink(
-                context,
-                label: 'Northwest',
-                page: ExplanationWebPage.northwest,
-                icon: Icons.grid_view_rounded,
-                isDrawer: isDrawer,
-              ),
-              const SizedBox(height: 6),
-              _buildVerticalNavLink(
-                context,
-                label: 'Dijkstra',
-                page: ExplanationWebPage.dijkstra,
-                icon: Icons.route_rounded,
-                isDrawer: isDrawer,
-              ),
-              const SizedBox(height: 6),
-              _buildVerticalNavLink(
-                context,
-                label: 'Kruskal',
-                page: ExplanationWebPage.kruskal,
-                icon: Icons.account_tree_outlined,
-                isDrawer: isDrawer,
-              ),
-            ],
-          ),
+        const SizedBox(height: 6),
+        _buildVerticalNavLink(
+          context,
+          label: '4. Marco teórico',
+          page: ExplanationWebPage.marcoTeorico,
+          icon: Icons.menu_book_outlined,
+          isDrawer: isDrawer,
         ),
-        const SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 4.0),
-          child: Text(
-            'Ordenamiento',
-            style: TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.0,
-              color: colorScheme.primary,
-            ),
-          ),
+        const SizedBox(height: 6),
+        _buildVerticalNavLink(
+          context,
+          label: '5. Aplicación',
+          page: ExplanationWebPage.aplicacion,
+          icon: Icons.assignment_turned_in_outlined,
+          isDrawer: isDrawer,
         ),
-        const SizedBox(height: 4),
-        Padding(
-          padding: const EdgeInsets.only(left: 12.0),
-          child: Column(
-            children: [
-              _buildVerticalNavLink(
-                context,
-                label: 'Selection Sort',
-                page: ExplanationWebPage.selectionSort,
-                icon: Icons.sort_rounded,
-                isDrawer: isDrawer,
-              ),
-              const SizedBox(height: 6),
-              _buildVerticalNavLink(
-                context,
-                label: 'Insertion Sort',
-                page: ExplanationWebPage.insertionSort,
-                icon: Icons.low_priority_rounded,
-                isDrawer: isDrawer,
-              ),
-              const SizedBox(height: 6),
-              _buildVerticalNavLink(
-                context,
-                label: 'Shell Sort',
-                page: ExplanationWebPage.shellSort,
-                icon: Icons.space_bar_rounded,
-                isDrawer: isDrawer,
-              ),
-              const SizedBox(height: 6),
-              _buildVerticalNavLink(
-                context,
-                label: 'Merge Sort',
-                page: ExplanationWebPage.mergeSort,
-                icon: Icons.call_merge_rounded,
-                isDrawer: isDrawer,
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
-          child: Text(
-            'Estructuras de datos',
-            style: TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.0,
-              color: colorScheme.primary,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 12),
-          child: _buildVerticalNavLink(
-            context,
-            label: 'Árboles BST',
-            page: ExplanationWebPage.bst,
-            icon: Icons.account_tree_outlined,
-            isDrawer: isDrawer,
-          ),
-        ),
-        const SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
-          child: Text(
-            'Herramientas',
-            style: TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.0,
-              color: colorScheme.primary,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 12),
-          child: _buildVerticalNavLink(
-            context,
-            label: 'MATLAB (Lógica Difusa)',
-            page: ExplanationWebPage.matlab,
-            icon: Icons.science_rounded,
-            isDrawer: isDrawer,
-          ),
+        const SizedBox(height: 6),
+        _buildVerticalNavLink(
+          context,
+          label: '6. Conclusiones',
+          page: ExplanationWebPage.conclusiones,
+          icon: Icons.check_circle_outline_rounded,
+          isDrawer: isDrawer,
         ),
         const SizedBox(height: 16),
         const Divider(height: 1, indent: 12, endIndent: 12),
         const SizedBox(height: 12),
         _buildVerticalNavLink(
           context,
-          label: 'Contacto',
-          page: ExplanationWebPage.contact,
+          label: 'Equipo',
+          page: ExplanationWebPage.equipo,
           icon: Icons.people_outline_rounded,
           isDrawer: isDrawer,
         ),

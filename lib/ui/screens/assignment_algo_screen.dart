@@ -5,6 +5,7 @@ import '../widgets/video_resource_card.dart';
 import '../widgets/web_explanation_navbar.dart';
 import 'widgets/assignment/hungarian_hero_section.dart';
 import 'widgets/assignment/hungarian_steps_section.dart';
+import 'widgets/assignment/hungarian_theory_section.dart';
 
 class AssignmentAlgoScreen extends StatelessWidget {
   const AssignmentAlgoScreen({super.key});
@@ -15,7 +16,7 @@ class AssignmentAlgoScreen extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return WebExplanationShell(
-      activePage: ExplanationWebPage.assignment,
+      activePage: ExplanationWebPage.marcoTeorico,
       child: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
@@ -134,6 +135,8 @@ class AssignmentAlgoScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 48),
                         const HungarianStepsSection(),
+                        const SizedBox(height: 48),
+                        const HungarianTheorySection(),
                         const SizedBox(height: 48),
                         const VideoResourceCard(
                           title: 'Video 3: explicación del algoritmo húngaro',
@@ -696,7 +699,7 @@ class AssignmentAlgoScreen extends StatelessWidget {
       child: Column(
         children: [
           const Text(
-            '¡Prueba el Algoritmo de Asignación!',
+            'Mira el algoritmo funcionando',
             style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.bold,
@@ -705,7 +708,7 @@ class AssignmentAlgoScreen extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           const Text(
-            'Ingresa a la aplicación para calcular asignaciones de costo mínimo en tus tablas.',
+            'Abre la aplicación para ver el grafo del ejercicio de delivery ya resuelto con el Método Húngaro.',
             style: TextStyle(fontSize: 14, color: Colors.white70),
           ),
           const SizedBox(height: 20),
@@ -729,7 +732,7 @@ class AssignmentAlgoScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
       child: Center(
         child: Text(
-          '© Guía Educativa - Algoritmo de Asignación',
+          '© Proyecto final de Análisis de Algoritmos · Neil Erick Lipan Valdez',
           style: TextStyle(fontSize: 12, color: colorScheme.onSurfaceVariant),
         ),
       ),
